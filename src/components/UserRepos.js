@@ -27,7 +27,7 @@ const styles = theme => ({
     },
     button: {
         display: 'block',
-        margin: '0 auto'
+        margin: '15px auto'
     }
 });
 
