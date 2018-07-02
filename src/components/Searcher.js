@@ -1,12 +1,11 @@
 import React from 'react';
+
+// MUI styling
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-
-
 
 const styles = theme => ({
     paper: {
@@ -21,12 +20,9 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
         maxWidth: '95%'
     },
-    title: {
-        margin: '0 6px',
-    }
 });
 
-
+// Searcher component
 class Searcher extends React.Component {
 
     constructor(props) {
@@ -36,20 +32,22 @@ class Searcher extends React.Component {
         }
     }
 
+    // Handles click on button, triggers parent's search
     handleSearch = () => {
         this.props.onSearch(this.state.search);
     }
 
+    // Handles input change and updates state
     handleChange = e => {
         this.setState({ search: e.target.value })
     }
 
     render() {
+        // Enables MUI theming
         const { classes } = this.props;
 
         return (
             <Paper className={classes.paper}>
-                {/* <Typography variant="caption">{this.props.title}</Typography> */}
                 <Grid container alignContent="space-around" alignItems="baseline" spacing={24}>
                     <Grid item xs={12} sm={9}>
                         <TextField
@@ -61,7 +59,7 @@ class Searcher extends React.Component {
                         />
                     </Grid>
                     <Grid item xs={12} sm={3}>
-                        <Button fullWidth onClick={this.handleSearch} variant="contained" color="primary" className={classes.button}>Search</Button>
+                        <Button disabled={!this.state.search.length} fullWidth onClick={this.handleSearch} variant="contained" color="primary" className={classes.button}>Search</Button>
                     </Grid>
                 </Grid>
             </Paper>

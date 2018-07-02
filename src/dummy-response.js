@@ -32,6 +32,7 @@ export default {
         "created_at": "2013-09-12T22:06:34Z",
         "updated_at": "2017-12-26T16:04:40Z"
     },
+    "orgsz": [],
     "orgs": [
         {
             "login": "nitobi",

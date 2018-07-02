@@ -1,26 +1,21 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 
-import LinearProgress from '@material-ui/core/LinearProgress';
-import List from '@material-ui/core/List';
+// Utils
+import { formatDate, windowOpen } from '../utils';
+
+// MUI styling
+import { withStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
-
-import { formatDate, windowOpen } from '../utils';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-
-
-
-
 
 const styles = theme => ({
     icon: {
@@ -40,6 +35,7 @@ const styles = theme => ({
     }
 });
 
+// UserRepoItem component
 class UserRepoItem extends React.Component {
     constructor(props) {
         super(props);
@@ -47,13 +43,17 @@ class UserRepoItem extends React.Component {
             open: false
         }
     }
+
+    // Handles click on expand/collapse button
     handleClick = () => {
-        this.setState(state => ({ open: !state.open }))
+        this.setState(state => ({ open: !state.open }));
     }
 
     render() {
+        // Enables MUI theming
         const { classes } = this.props;
 
+        // Builds components for icon counters
         const countItems = [
             {
                 title: "Forks",
@@ -84,6 +84,16 @@ class UserRepoItem extends React.Component {
             </Grid>
         );
 
+        // Builds open repo button component
+        const openButton = <Grid item xs={12} sm={4} className={classes.iconContainer}>
+            <Button fullWidth variant="contained" color="default" className={classes.button} onClick={windowOpen.bind(null, this.props.repo.html_url)}>
+                <span>Open</span>
+                <SvgIcon style={{ marginLeft: 5 }}>
+                    <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
+                </SvgIcon>
+            </Button>
+        </Grid>;
+
         return (
             <div>
                 <ListItem key={this.props.repo.id} button onClick={this.handleClick}>
@@ -97,16 +107,7 @@ class UserRepoItem extends React.Component {
                 <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                     <Grid container justify="space-around" alignItems="baseline">
                         {countItems}
-                        <Grid item xs={12} sm={4} className={classes.iconContainer}>
-                            <Button fullWidth variant="contained" color="default" className={classes.button} onClick={windowOpen.bind(null,this.props.repo.html_url)}>
-                                Open
-                                <SvgIcon style={{ marginLeft: 5 }}>
-                                    <path d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
-                                </SvgIcon>
-                            </Button>
-                        </Grid>
-
-
+                        {openButton}
                     </Grid>
                 </Collapse>
 
