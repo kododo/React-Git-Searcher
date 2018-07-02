@@ -60,7 +60,7 @@ const styles = theme => ({
     copyright: {
         textAlign: 'center',
         display: 'block',
-        margin: theme.spacing.unit * 3,
+        margin: `${theme.spacing.unit * 5}px 0`,
         color: theme.palette.secondary.normal,
         lineHeight: 1.5,
         opacity: 0.8
