@@ -18,11 +18,11 @@ export default {
         "received_events_url": "https://api.github.com/users/kododo/received_events",
         "type": "User",
         "site_admin": false,
-        "name": null,
+        "name": 'Daniel López Sebastián',
         "company": null,
         "blog": "",
-        "location": null,
-        "email": null,
+        "location": 'Madrid, Spain',
+        "email": 'danilopezsebastian@gmail.com',
         "hireable": null,
         "bio": null,
         "public_repos": 3,
@@ -32,7 +32,6 @@ export default {
         "created_at": "2013-09-12T22:06:34Z",
         "updated_at": "2017-12-26T16:04:40Z"
     },
-    "orgsz": [],
     "orgs": [
         {
             "login": "nitobi",

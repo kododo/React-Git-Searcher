@@ -22,11 +22,17 @@ const styles = theme => ({
     avatar: {
         width: 60,
         height: 60,
-        float: 'left',
-        margin: theme.spacing.unit * 2
+        display: 'block',
+        margin: '0 auto',
+        [theme.breakpoints.up('sm')]: {
+            float: 'left',
+            margin: theme.spacing.unit * 2
+        }
     },
     userInfo: {
-        marginLeft: 70
+        [theme.breakpoints.up('sm')]: {
+            marginLeft: 92
+        }
     },
     title: {
         marginTop: theme.spacing.unit * 2
@@ -61,7 +67,7 @@ class UserInfo extends React.Component {
                             <Typography variant="subheading" paragraph>{this.props.userInfo.user.name}</Typography>
                             {details}
                         </div>
-                        <div style={{clear:'both'}}></div>
+                        <div style={{ clear: 'both' }}></div>
                         <UserRepos reposInfo={this.props.reposInfo} />
                         <UserOrgs orgsInfo={this.props.userInfo.orgs} />
                     </Paper>

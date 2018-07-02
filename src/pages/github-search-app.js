@@ -56,6 +56,14 @@ const styles = theme => ({
         [theme.breakpoints.up('sm')]:{
             display: 'inline'
         }
+    },
+    copyright: {
+        textAlign: 'center',
+        display: 'block',
+        margin: theme.spacing.unit * 3,
+        color: theme.palette.secondary.normal,
+        lineHeight: 1.5,
+        opacity: 0.8
     }
 });
 
@@ -183,6 +191,7 @@ class GithubSearchApp extends React.Component {
                         <Typography className={classes.debugCaption} variant="caption">Enables fake requests to GitHub API</Typography>
                     </Paper>
                 </div>
+                <Typography className={classes.copyright} variant="caption">Made with ❤️ by<br/>danilopezsebastian@gmail.com<br/>2018</Typography>
                 <Snackbar
                     className={classes.snack}
                     anchorOrigin={{
