@@ -19,6 +19,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Snackbar from '@material-ui/core/Snackbar';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
     root: {
@@ -36,15 +39,25 @@ const styles = theme => ({
     toolbar: {
         maxWidth: 600,
         margin: '0 auto',
-        textAlign: 'left'
+        textAlign: 'left',
     },
     snack: {
         margin: 20
+    },
+    appTitle: {
+        flex: 1
+    },
+    paper: {
+        margin: theme.spacing.unit,
+        padding: `${theme.spacing.unit/2}px ${theme.spacing.unit*2}px`,
+    },
+    debugCaption: {
+        verticalAlign: 'middle',
+        [theme.breakpoints.up('sm')]:{
+            display: 'inline'
+        }
     }
 });
-
-// Toggle debug mode
-const DEBUG_MODE = true;
 
 // Error messages
 const messages = {
@@ -60,7 +73,8 @@ class GithubSearchApp extends React.Component {
         this.state = {
             userInfo: null,
             reposInfo: null,
-            fetchingUser: false
+            fetchingUser: false,
+            debugMode: false
         }
     }
 
@@ -80,6 +94,11 @@ class GithubSearchApp extends React.Component {
         });
     }
 
+    // Handles debug switcher
+    handleDebugSwitch = e => {
+        this.setState({ debugMode: e.target.checked });
+    }
+
     // Main logic, handles search input
     handleSearch = async search => {
         // Initial state
@@ -90,10 +109,10 @@ class GithubSearchApp extends React.Component {
             userInfo: null,
             reposInfo: null
         });
-        
+
         // Try to load user info
         try {
-            userInfo = DEBUG_MODE ? await this.getDummyUserData() : await getUserData(search);
+            userInfo = this.state.debugMode ? await this.getDummyUserData() : await getUserData(search);
         } catch (err) {
             this.showErrorSnack(messages.USER_NOT_FOUND);
             this.setState({ fetchingUser: false });
@@ -105,9 +124,9 @@ class GithubSearchApp extends React.Component {
         });
 
         // Try to load user repos
-        try{
-            reposInfo = DEBUG_MODE ? await this.getDummyReposData() : await getRepos(search);
-        }catch(err){
+        try {
+            reposInfo = this.state.debugMode ? await this.getDummyReposData() : await getRepos(search);
+        } catch (err) {
             this.showErrorSnack(messages.REPOS_NOT_FOUND);
             reposInfo = [];
         }
@@ -138,17 +157,31 @@ class GithubSearchApp extends React.Component {
             <div className={classes.root}>
                 <AppBar position="fixed" color="primary">
                     <Toolbar className={classes.toolbar}>
-                        <Typography variant="title" color="inherit">{title}</Typography>
+                        <Typography className={classes.appTitle} variant="title" color="inherit">{title}</Typography>
                     </Toolbar>
                 </AppBar>
                 <div className={classes.wrapper}>
                     <Searcher title="Search" onSearch={this.handleSearch} />
                     {this.state.fetchingUser && <CircularProgress className={classes.progress} />}
-                    <UserInfo 
-                        userInfo={this.state.userInfo} 
-                        reposInfo={this.state.reposInfo} 
+                    <UserInfo
+                        userInfo={this.state.userInfo}
+                        reposInfo={this.state.reposInfo}
 
+                    />
+                    <Paper className={classes.paper}>
+                        <FormControlLabel
+                            control={
+                                <Switch
+                                    checked={this.state.debugMode}
+                                    onChange={this.handleDebugSwitch}
+                                    value="checkedB"
+                                    color="primary"
+                                />
+                            }
+                            label="Toggle Debug mode"
                         />
+                        <Typography className={classes.debugCaption} variant="caption">Enables fake requests to GitHub API</Typography>
+                    </Paper>
                 </div>
                 <Snackbar
                     className={classes.snack}

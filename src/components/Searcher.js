@@ -42,26 +42,35 @@ class Searcher extends React.Component {
         this.setState({ search: e.target.value })
     }
 
+    // Captures form submitting
+    handleSubmit = e => {
+        e.preventDefault();
+        this.handleSearch();
+    }
+
     render() {
         // Enables MUI theming
         const { classes } = this.props;
 
         return (
             <Paper className={classes.paper}>
-                <Grid container alignContent="space-around" alignItems="baseline" spacing={24}>
-                    <Grid item xs={12} sm={9}>
-                        <TextField
-                            label="Search for a username"
-                            className={classes.textField}
-                            margin="none"
-                            onChange={this.handleChange}
-                            fullWidth
-                        />
+                <form onSubmit={this.handleSubmit}>
+                    <Grid container alignContent="space-around" alignItems="baseline" spacing={24}>
+                        <Grid item xs={12} sm={9}>
+
+                            <TextField
+                                label="Search for a username"
+                                className={classes.textField}
+                                margin="none"
+                                onChange={this.handleChange}
+                                fullWidth
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                            <Button disabled={!this.state.search.length} fullWidth onClick={this.handleSearch} variant="contained" color="primary" className={classes.button}>Search</Button>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <Button disabled={!this.state.search.length} fullWidth onClick={this.handleSearch} variant="contained" color="primary" className={classes.button}>Search</Button>
-                    </Grid>
-                </Grid>
+                </form>
             </Paper>
         );
     }
